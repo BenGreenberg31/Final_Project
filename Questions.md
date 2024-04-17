@@ -23,7 +23,15 @@ Answer all:
 
 Pick two questions:
 1. Investigate and quantify how directors have influenced the careers of crew members. Clue: consider mapping the careers of crew members over time and see if they experienced significant success after working with a particular director. What directors have had the most influence on crew members?
+
+* Metric for quantifying director influence - look at number of projects before working with a certain director and then number of projects after working with a certain director (What directors created the most other opportunities for their crew memebers)
+* Weighting roles by importance (Supervisor roles weighted higher)
+* Scoring strength of relationship (number of times worked together)
+
 2. Measure how roles of crew members fluctuate
+
+* If we have roles weighted by importance then we can map trajectories of careers
+* Looking at pairs or groups of crew members that worked together (community detection algorithm?)
 
 
 ## List of directors
