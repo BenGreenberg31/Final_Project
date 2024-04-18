@@ -54,11 +54,11 @@ def read_json_files_from_directory(directory):
     return json_data
 
 ```
-## Network Generation
+## Network Generation: Becca
 Disscussed ideas for network generation. Created plans for some intial networks to create.
-## Visualization
+
+## Visualization: Katie
 Plan to use gephi to visualize. Will enable filtering by attributes - particularly highlight by crew member, by director, by project to examine director's influence across different crew members and the connections crew members have had.
 
-## Analysis
-
-Planning to use mostly python and some networkx functionality to conduct analysis. Unsure of exactly what it will look like as of right now. Discussed a lot about rough approach to answer questions.
+## Analysis: Ben
+Planning to use mostly python and some networkx functionality to conduct analysis. Unsure of exactly what it will look like as of right now. Discussed a lot about rough approach to answer questions like some sort of metric for quantifying director influence - look at number of projects before working with a certain director and then number of projects after working with a certain director (What directors created the most other opportunities for their crew memebers). We also discussed weighting roles by importance (Supervisor roles weighted higher) and scoring strength of relationship (number of times worked together). If we have roles weighted by importance then we can map trajectories of careers to answer the question of how careers of crew members fluctuate. We also thought about Looking at pairs or groups of crew members that worked together maybe employing some sort of community detection algorithm.
