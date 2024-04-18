@@ -55,7 +55,7 @@ def read_json_files_from_directory(directory):
 
 ```
 ## Network Generation: Becca
-Disscussed ideas for network generation. Created plans for some intial networks to create.
+Discussed ideas for network generation. Created plans for some intial networks to create.
 
 ## Visualization: Katie
 Plan to use gephi to visualize. Will enable filtering by attributes - particularly highlight by crew member, by director, by project to examine director's influence across different crew members and the connections crew members have had.
