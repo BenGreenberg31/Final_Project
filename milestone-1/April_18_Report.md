@@ -2,7 +2,7 @@
 Date: April 18, 2024
 
 ## Data Collection: Tiffany
-> Finished majority of data collection, ran into some problems with certain directors. However, have scraped majority of directors and their credits. Starting to clean up and fix data as well as go back and fix up some code, however have already shared raw data with group members.
+> Finished majority of data collection, ran into some problems with certain directors. However, have scraped majority of directors and their credits. Starting to clean up and fix data as well as go back and fix up some code, however have already shared raw data with group members in the form of json files.
 
 Some code used:
 ```python
