@@ -60,3 +60,5 @@ Disscussed ideas for network generation. Created plans for some intial networks 
 Plan to use gephi to visualize. Will enable filtering by attributes - particularly highlight by crew member, by director, by project to examine director's influence across different crew members and the connections crew members have had.
 
 ## Analysis
+
+Planning to use mostly python and some networkx functionality to conduct analysis. Unsure of exactly what it will look like as of right now. Discussed a lot about rough approach to answer questions.
