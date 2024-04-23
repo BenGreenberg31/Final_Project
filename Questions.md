@@ -27,6 +27,7 @@ Pick two questions:
 * Metric for quantifying director influence - look at number of projects before working with a certain director and then number of projects after working with a certain director (What directors created the most other opportunities for their crew memebers)
 * Weighting roles by importance (Supervisor roles weighted higher)
 * Scoring strength of relationship (number of times worked together)
+* Number of times worked together over total projects could also help evaluate how often directors work with the same crew members
 
 2. Measure how roles of crew members fluctuate
 
