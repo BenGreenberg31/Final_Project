@@ -29,6 +29,7 @@ Pick two questions:
 * Scoring strength of relationship (number of times worked together)
 * Number of times worked together over total projects could also help evaluate how often directors work with the same crew members
 
+Loose role weighting:
 1. Producer
 2. director
 3. writer
@@ -45,6 +46,7 @@ Pick two questions:
 14. re recording mixer
 15. special effects supervisor
 16. Visual effects supervisor
+
 
 2. Measure how roles of crew members fluctuate
 
