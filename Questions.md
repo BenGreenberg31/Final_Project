@@ -53,6 +53,15 @@ Loose role weighting:
 * If we have roles weighted by importance then we can map trajectories of careers
 * Looking at pairs or groups of crew members that worked together (community detection algorithm?)
 
+* Just look at if roles change, for some positions
+* For this crew has a person changed their roles
+* Look at number of role changes and see if some roles experience less change
+* Some roles might change a lot and some might be more consistent
+
+3.
+* For each director look at each role and the number of unique crew members they have used normalized by the total number of projects
+* Iterate through every role and then average those values for each role into some ==overall score for crew retention 
+
 
 ## List of directors
 
