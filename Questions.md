@@ -29,22 +29,22 @@ Pick two questions:
 * Scoring strength of relationship (number of times worked together)
 * Number of times worked together over total projects could also help evaluate how often directors work with the same crew members
 
-* Producer
-* director
-* writer
-* cinematographer
-* Editing
-* Music
-* casting
-* Production design
-* Costume design
-* Makeup department head
-* hair department head
-* supervising sound
-* sound designer
-* re recording mixer
-* special effects supervisor
-* Visual effects supervisor
+1. Producer
+2. director
+3. writer
+4. cinematographer
+5. Editing
+6. Music
+7. casting
+8. Production design
+9. Costume design
+10. Makeup department head
+11. hair department head
+12. supervising sound
+13. sound designer
+14. re recording mixer
+15. special effects supervisor
+16. Visual effects supervisor
 
 2. Measure how roles of crew members fluctuate
 
