@@ -3,6 +3,16 @@ Date: May 14, 2024
 
 ## Research Questions/Tasks
 
+Rubric:
+Report includes project topic summary and research questions.
+Report addresses research questions.
+Report is well-organized and includes few typos/grammatical errors
+Report includes code snippets, and Github repo includes all code, data, and resources used in project.
+Repo Python scripts (not Notebooks) are well-documented (have comments and ReadMes). Code is modular (uses separate files/functions) and reusable (no hard-coding).
+Presentation slides are well-organized and include images and code snippets to assist illustration and explanations.
+Presenters effectively communicated their solution to class
+
+
 Answer all:
 1. What is the distribution of entities in the director-crew dataset:
   * Number of featured movies? 
