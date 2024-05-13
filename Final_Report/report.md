@@ -32,6 +32,14 @@ Pick two questions:
 ## Visualization: Katie
 
 ## Analysis: Ben
+To answer the first questions relating to what is the distribution of entities in the director-crew dataset I wrote a simple script which can be found in the statistic_check.py file within the final_report folder. The results that it yielded are shown below
+
+1.What is the distribution of entities in the director-crew dataset:
+* Number of featured movies?
+* Number of directors, number movies per director, and average number of movies per director?
+* Number of crews?
+* Number of roles and frequency of each role?
+
 
 ## Research Questions/Tasks
 
