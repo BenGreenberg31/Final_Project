@@ -97,6 +97,7 @@ percentage = (one_role_counter/tot_crew * 100)
 Sought to understand what percentage of crew members only have one role for their entire career to better understand the dataset. Also the research question is related to fluctuations of crew member careers so understanding this would tell us how many crew have careers that are static or do not fluctuate between roles.
 * Found that the percentage of the 8137 crew members that have only worked in one role throughout their career was 94.99%
 * This told us a lot about the dataset and gave us more understanding about the nature of crew careers.
+* One of the biggest takeaways is that most crew members are specialized and will not change roles throughout their career. This makes logical sense, as once you build a technical set of skills, say for sound you will most likely continue to work in the department instead of switching to music or cinematography.
 * Among those 95% of crew members that have only worked one role the breakdown of roles were as follows
 
 |Role|Percentage of Crew Members|Count of Crew Members|
@@ -114,6 +115,45 @@ Sought to understand what percentage of crew members only have one role for thei
 |Special Effects by| 3.42% |264|
 |Directed by|2.90% |224|
 
+* This led us to be curious about the roughly 5 percent of crew members that have switched roles. What roles are the most static and what roles see the most people switch in to them.
+* I decided to look at the likelihood that a crew member only worked in a certain role.
+* The results are as follows
+
+Likelihood of crew members exclusively doing each role:
+* Makeup Department: 99.75%
+* Visual Effects by: 99.03%
+* Sound Department: 98.45%
+* Casting By: 97.97%
+* Special Effects by: 97.78%
+* Costume Design by: 97.11%
+* Production Design by: 96.17%
+* Music by: 94.35%
+* Cinematography by: 91.39%
+* Produced by: 84.80%
+* Writing Credits: 79.20%
+* Directed by: 47.06%
+
+```python
+crew_roles = df.groupby(['Name', 'Role']).size().unstack(fill_value=0)
+
+#print(crew_roles)
+
+# Filter crew members who have worked in any role
+crew_with_roles = crew_roles[crew_roles.sum(axis=1) > 0]
+
+#print(crew_with_roles.head())
+
+# Calculate the likelihood of each role
+role_likelihood = {}
+for role in crew_with_roles.columns:
+    num_crew_with_role = (crew_with_roles[role] > 0).sum()
+    num_crew_only_role = ((crew_with_roles[role] > 0) & (crew_with_roles.sum(axis=1) == crew_with_roles[role])).sum()
+    if num_crew_with_role > 0:
+        role_likelihood[role] = num_crew_only_role / num_crew_with_role
+
+
+sorted_roles_likelihood = sorted(role_likelihood.items(), key=lambda x: x[1], reverse=True)
+```
 
 How widespread is the phenomenon of directors re-using the same crew? Do renowned directors (and women/minority directors) tend to work persistently with the same key collaborators compared to lesser recognized directors or a [random Hollywood director](100_rand_hollywood_dir.txt)? 
 
@@ -123,3 +163,7 @@ How widespread is the phenomenon of directors re-using the same crew? Do renowne
 * Analyses was provided to address relevant research questions
 * Analysis is sound and code provided for computing metrics. Documented (comments and Readmes) Python scripts (not Notebooks) were used. Code is modular (uses separate files/functions) and reusable (no hard-coding). 
 * Report includes problem summary/questions, code snippets, and is clearly written: well-organized and includes few typos/grammatical errors
+
+### References
+* https://www.geeksforgeeks.org/python-itertools-combinations-function/
+* https://www.geeksforgeeks.org/how-to-calculate-jaccard-similarity-in-python/
