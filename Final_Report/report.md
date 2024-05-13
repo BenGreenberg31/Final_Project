@@ -35,13 +35,17 @@ Pick two questions:
 To answer the first questions relating to what is the distribution of entities in the director-crew dataset I wrote a simple script which can be found in the statistic_check.py file within the final_report folder. The results that it yielded are shown below
 
 1.What is the distribution of entities in the director-crew dataset:
+
 Number of featured movies?
 * 1264
+
 Number of directors, number movies per director, and average number of movies per director?
 * There are 101 directors in the dataset, and the average number of movies per director is 30.39
 * The number of movies that each director has made can be found by running the python file
+
 Number of crews?
 * There are 8137 crew in the dataset
+
 Number of roles and frequency of each role?
 * There are 12 roles
 
@@ -59,6 +63,59 @@ Number of roles and frequency of each role?
 |Costume Design by    |   1226|
 |Makeup Department   |     701|
 |Special Effects by  |     533|
+
+Research Questions
+
+Measure how roles of crew members fluctuate?
+
+```python
+# What percentage of crew members only have one role and for those crew members what are their roles most often?
+
+# counter for crew that only do one role throughout their career
+one_role_counter = 0
+
+single_roles = []
+
+tot_crew = df['Name'].nunique()
+grouped_by_name = df.groupby('Name')
+
+for name, group_df in grouped_by_name:
+    # for each group
+    # get the number of unique roles 
+    num_roles = group_df['Role'].nunique()
+    #print(num_roles)
+    #print(group_df)
+    # unique_roles == 1
+    # update counter variable 
+    # store what that role is in a list
+    if num_roles == 1:
+        one_role_counter += 1
+        single_roles.append(group_df['Role'].iloc[0])
+
+percentage = (one_role_counter/tot_crew * 100)
+```
+Sought to understand what percentage of crew members only have one role for their entire career to better understand the dataset. Also the research question is related to fluctuations of crew member careers so understanding this would tell us how many crew have careers that are static or do not fluctuate between roles.
+* Found that the percentage of the 8137 crew members that have only worked in one role throughout their career was 94.99%
+* This told us a lot about the dataset and gave us more understanding about the nature of crew careers.
+* Among those 95% of crew members that have only worked one role the breakdown of roles were as follows
+
+|Role|Percentage of Crew Members|Count of Crew Members|
+|----|------|-----|
+|Writing Credits| 16.76% |1295|
+|Produced by| 15.95% |1233|
+|Visual Effects by|14.57% |1126|
+|Sound Department|9.85% |761|
+|Cinematography by| 7.14% |552|
+|Music by|6.26% |484|
+|Casting By| 6.25% |483|
+|Production Design by| 6.17% |477|
+|Costume Design by |5.65% |437|
+|Makeup Department| 5.08%| 393|
+|Special Effects by| 3.42% |264|
+|Directed by|2.90% |224|
+
+
+How widespread is the phenomenon of directors re-using the same crew? Do renowned directors (and women/minority directors) tend to work persistently with the same key collaborators compared to lesser recognized directors or a [random Hollywood director](100_rand_hollywood_dir.txt)? 
 
 ## Research Questions/Tasks
 
