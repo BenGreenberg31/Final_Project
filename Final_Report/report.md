@@ -5,7 +5,6 @@ Date: May 14, 2024
 
 ## Network Generation: Becca
 
-
 ## Visualization: Katie
 
 ## Analysis: Ben
