@@ -61,6 +61,3 @@ for index, row in merged_df.iterrows():
 
 #save network
 nx.write_gexf(G2, "/content/attributes.gexf")
-
-from google.colab import files
-files.download('attributes.gexf')
