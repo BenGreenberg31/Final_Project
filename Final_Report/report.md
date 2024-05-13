@@ -133,6 +133,8 @@ Likelihood of crew members exclusively doing each role:
 * Writing Credits: 79.20%
 * Directed by: 47.06%
 
+Most roles have a pretty high likelihood that crew members have only done those roles, especially for the more technical roles, whereas production, writing, and directing were among the lowest, most notably directing was below 50% whereast the next lowest was writing at clost to 80%.
+
 ```python
 crew_roles = df.groupby(['Name', 'Role']).size().unstack(fill_value=0)
 
@@ -155,8 +157,28 @@ for role in crew_with_roles.columns:
 sorted_roles_likelihood = sorted(role_likelihood.items(), key=lambda x: x[1], reverse=True)
 ```
 
+* The sort of natural next step is trying to determine how people are moving within these roles. Where are most first time directors coming from, what was their background before that. And for people that are no longer in a role, what are they most likely to do next.
+
+
+
 How widespread is the phenomenon of directors re-using the same crew? Do renowned directors (and women/minority directors) tend to work persistently with the same key collaborators compared to lesser recognized directors or a [random Hollywood director](100_rand_hollywood_dir.txt)? 
 
+* For this question I was thinking about various similarity metrics to use and I decided to use the Jaccard Similarity Metric that we had talked about in class. I did some google searching and I found an implementation for a Jaccard Similarity function in python on geeksforgeeks.org
+
+```python
+def jaccard_similarity(set1, set2):
+    # intersection of two sets
+    intersection = len(set1.intersection(set2))
+    # Unions of two sets
+    union = len(set1.union(set2))
+     
+    return intersection / union
+```
+ 
+* Jaccard similarity is typically used to compute similarity between two sets or groups, but for this use case we have directors with sometimes many more crews than that so I needed a metric that captured similarity between all the crews that a director has used in their career on different projects.
+* I decided to calculate the Jaccard similarity for each pair of crews and then average these scores (which I did using the itertools combinations function). This method gives an overall idea of similarity across multiple projects and gives us a way to compare different directors and how similar their crews are from project to project.
+
+  
 ## Research Questions/Tasks
 
 * Analyses was provided to understand the composition of dataset
