@@ -90,9 +90,32 @@ Visualizing such a larger network is difficult. I decided to break graphing the 
 
 To focus in on these directors and compare them to others, I used the ego network in Gephi to visualize their networks of crew. For example, we have Woody Allen, the director with the highest Jaccard similarity:
 ![woody_allen_ego](https://github.com/BenGreenberg31/Final_Project/assets/129798383/14539e66-a4a2-4f88-9a16-f7adb4798e03)
+We can compare this ego network, of a very prominent director, to that of Gregg Araki, a much smaller director, who is an outlier in the network and has a pocket of crew connected to the rest of the network through him. 
+![gregg_araki_ego](https://github.com/BenGreenberg31/Final_Project/assets/129798383/318d4c6b-de99-4311-962e-3d1165b83549)
 
+Otherwise, I focused on writing a script to create visualizations based on the analysis work. I plotted overall distributions using line charts and focused in on top ten directors in a few cases by highlighting that segment of the distribution with a bar chart. For example, the following code chunk visualizes the jaccard similarity distribution of all the directors in the network.
 
+```python
+plt.figure()
+plt.plot(sorted_directors['Director'], sorted_directors['Average Jaccard Similarity'])
+plt.title('Jaccard Similarity of Directors')
+plt.ylabel('Jaccard Similarity Score')
+plt.xticks([])
+plt.savefig('jaccard_plot.png')
+```
+To see a smaller view of these numbers, the following code chunk uses matplotlib to generate a bar chart of the Jaccard similarity of the ten directors with the highest Jaccard similarity score.
 
+```python
+plt.figure()
+plt.bar(sorted_directors.head(10)['Director'], sorted_directors.head(10)['Average Jaccard Similarity'])
+plt.title('Jaccard Similarity of Directors')
+plt.ylabel('Jaccard Similarity Score')
+plt.xlabel('Director')
+# plt.xticks([])
+plt.xticks(rotation=45, ha='right')
+plt.subplots_adjust(bottom=0.3)
+plt.savefig('jaccard_bar_plot.png')
+```
 ## Analysis: Ben
 To answer the first questions relating to what is the distribution of entities in the director-crew dataset I wrote a simple script which can be found in the statistic_check.py file within the final_report folder. The results that it yielded are shown below
 
