@@ -26,7 +26,77 @@ Pick two questions:
 
 
 ## Data Collection: Tiffany
+Data collection was a multi-process step where I decided to make multiple different csv files at different stages of the process. This was in order to keep track of the data. Another step to ensure we had all of the data involved creating folders with json files containing everything. 
 
+For the data collecting and preprocessing steps, I used a variety of different functions to perform the tasks.
+Some code to initially scrape the directors and create directories and json files include:
+```python
+def scraping_full_credits(director_ids):
+    for id in director_ids:
+        credits_dictionary = imdb_scraper.get_full_credits_for_director(id)
+        directory = id
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+            json_file_path = os.path.join(directory, '{}.json'.format(id))
+            with open(json_file_path, 'w') as json_file:
+                json.dump(credits_dictionary, json_file)
+
+def read_json_files_from_directory(directory):
+    json_data = []
+    for filename in os.listdir(directory):
+        if filename.endswith('.json'):
+            filepath = os.path.join(directory, filename)
+            with open(filepath, 'r') as file:
+                data = json.load(file)
+                json_data.append(data)
+    return json_data
+
+def create_csv(directories):
+    all_json_data = []
+# Loop through each directory and read JSON files
+    all_credits = []
+    for directory in directories:
+        try:
+            json_data = read_json_files_from_directory(directory)
+            all_json_data.extend(json_data)
+            for entry in json_data:
+                director_name = entry.get("director_name", "")
+                credits = entry.get("credits", [])
+    
+    # Extract credits
+            for credit in credits:
+                credit["director_name"] = director_name
+                credit["director_id"] = directory
+                all_credits.append(credit)
+        except FileNotFoundError:
+            print("Directory not found:", directory)
+        
+        df = pd.DataFrame(all_credits)
+        df['title_ids'] = df['uri'].str.extract(r'(tt\d+)')
+        output_csv = 'directors_movies.csv'
+        df.to_csv(output_csv, index=False) 
+```
+
+Another to scrape for the crews:
+```python
+def movies_json(director_ids, df):
+    for id in director_ids:
+        subset_director_movies = df.loc[df['director_id'] == id]
+        movies_list = subset_director_movies['title_ids'].tolist()
+        parent_directory = os.getcwd()
+        for title in movies_list:
+            crew_dictionary = imdb_scraper.get_full_crew_for_movie(title, set_imdb_details=True)
+            full_directory_path_ids = os.path.join(parent_directory, id)
+            if os.path.isdir(full_directory_path_ids):
+                full_directory_path = os.path.join(full_directory_path_ids, '{}_movies'.format(id))
+                if not os.path.exists(full_directory_path):
+                    os.makedirs(full_directory_path)
+                json_file_path = os.path.join(full_directory_path, '{}.json'.format(title))
+                if not os.path.exists(json_file_path):
+                    with open(json_file_path, 'w') as json_file:
+                        json.dump(crew_dictionary, json_file)
+
+```
 ## Network Generation: Becca
 I decided to create two networks. Both networks are directed with links from crew members to directors. The first network has one link per crew member/director pair and each link is weighted by the number of projects the pair has worked on together. The second network has a one link per project for each crew member/director pair. This links carry the attribute data for the year or the project and the role the crew member held.
 
