@@ -116,7 +116,7 @@ plt.xticks(rotation=45, ha='right')
 plt.subplots_adjust(bottom=0.3)
 plt.savefig('jaccard_bar_plot.png')
 ```
-## Analysis: Ben
+
 ## Analysis: Ben
 To answer the first questions relating to what is the distribution of entities in the director-crew dataset I wrote a simple script which can be found in the statistic_check.py file within the final_report folder. The results that it yielded are shown below
 
