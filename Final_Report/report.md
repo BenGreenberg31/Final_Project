@@ -376,7 +376,19 @@ for director, group in directors:
 Directors with the Highest Scores
 * Woody Allen: Highest average Jaccard similarity of 0.176311. This suggests that Woody Allen has a strong tendency to reuse the same crew members across his projects more than any other director in this dataset. Joel Coen Follows with a similarity score of 0.148928, indicating significant reuse of crew members. Clint Eastwood, Christopher Nolan, and Kelly Reichardt also show notable similarities in their crews, with scores ranging from 0.094836 to 0.069960, supporting their preference for working with familiar teams.
 
-* These are all notable directors which seems to suggest that the more notable the director the more prevalent the henomena of directors re-using the same crew is. And that makes logical sense that bigger more influential directors would have more sway or choice in who is on their crew. Additionally there might be something to be said for success influencing crew reuse. If a director makes a really succesful movie, they probably would want to employ some of the same crew that helped contribute to that success.
+* These are all notable directors which seems to suggest that the more notable the director the more prevalent the phenomena of directors re-using the same crew is. And that makes logical sense that bigger more influential directors would have more sway or choice in who is on their crew. Additionally there might be something to be said for success influencing crew reuse. If a director makes a really succesful movie, they probably would want to employ some of the same crew that helped contribute to that success.
+
+* THe bottom 5 directors in terms of crew similarity were as follows:
+
+|Director|Similarity Score|
+ |----|----|
+|Karyn Kusama            |        0.004513|
+|Mary Harron               |     0.004112|
+|Antoine Fuqua             |       0.004056|
+|Gina Prince               |     0.004053|
+|Cary Joji Fukunaga           |         0.003973|
+
+* These are all less notable directors and interestingly 4 of the 5 lowest directors in terms of crew similarity are women. More work would have to be done to expand on this and examine this trend.
 
 * The mean Jaccard similarity score across all directors is 0.026026 and  suggesting that on average, directors do not often reuse crew members extensively.
 * The standard deviation is 0.027091, indicating a moderate variability in crew reuse among directors.
