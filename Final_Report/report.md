@@ -117,6 +117,7 @@ plt.subplots_adjust(bottom=0.3)
 plt.savefig('jaccard_bar_plot.png')
 ```
 ## Analysis: Ben
+## Analysis: Ben
 To answer the first questions relating to what is the distribution of entities in the director-crew dataset I wrote a simple script which can be found in the statistic_check.py file within the final_report folder. The results that it yielded are shown below
 
 1.What is the distribution of entities in the director-crew dataset:
@@ -149,9 +150,9 @@ Number of roles and frequency of each role?
 |Makeup Department   |     701|
 |Special Effects by  |     533|
 
-Research Questions
+### Research Questions
 
-Measure how roles of crew members fluctuate?
+#### Measure how roles of crew members fluctuate?
 
 ```python
 # What percentage of crew members only have one role and for those crew members what are their roles most often?
@@ -244,9 +245,60 @@ sorted_roles_likelihood = sorted(role_likelihood.items(), key=lambda x: x[1], re
 
 * The sort of natural next step is trying to determine how people are moving within these roles. Where are most first time directors coming from, what was their background before that. And for people that are no longer in a role, what are they most likely to do next.
 
+```python
+role_transition_to = {role: {} for role in roles_frequency}
+role_transition_from = {role: {} for role in roles_frequency}
+total_transitions_to = {role: 0 for role in roles_frequency}
+total_transitions_from = {role: 0 for role in roles_frequency}
+
+multi_roles_crew = 0
+
+for name, group_df in grouped_by_name:
+    # If a crew member had more than one role throughout their career
+    # Iterate through the dataframe to record transitions for those crew members
+    num_roles = group_df['Role'].nunique()
+
+    if num_roles > 1:
+        for i in range(len(group_df) - 1):
+            current_row = group_df.iloc[i]
+            next_row = group_df.iloc[i + 1]
+            current_role = current_row['Role']
+            next_role = next_row['Role']
+            #print(current_role)
+            #print(next_role)
+            if current_role != next_role:
+                total_transitions_to[current_role] += 1
+                total_transitions_from[next_role] += 1
+                if next_role in role_transition_to[current_role]:
+                    role_transition_to[current_role][next_role] += 1
+                else:
+                    role_transition_to[current_role][next_role] = 1
+
+                if current_role in role_transition_from[next_role]:
+                    role_transition_from[next_role][current_role] += 1
+                else:
+                    role_transition_from[next_role][current_role] = 1
 
 
-How widespread is the phenomenon of directors re-using the same crew? Do renowned directors (and women/minority directors) tend to work persistently with the same key collaborators compared to lesser recognized directors or a [random Hollywood director](100_rand_hollywood_dir.txt)? 
+# aim is to give clearer picture of movement between roles
+
+# calculate the probabilities for transitions to other roles and percentages
+role_transition_to_probabilities = {}
+for current_role, transitions in role_transition_to.items():
+    total_transitions = total_transitions_to[current_role]
+    role_transition_to_probabilities[current_role] = {next_role: (count, count / total_transitions * 100) for next_role, count in transitions.items()}
+
+# calculate the probabilities for transitions from other roles and pecetanges
+role_transition_from_probabilities = {}
+for next_role, transitions in role_transition_from.items():
+    total_transitions = total_transitions_from[next_role]
+    role_transition_from_probabilities[next_role] = {current_role: (count, count / total_transitions * 100) for current_role, count in transitions.items()}
+```
+
+* The biggest takeaway from this analysis was how the flow between Directing, production, and writing dominates, highlighting a trio of roles that often cycle among each other. This definitely highlights the central importance of these roles in career development within the film industry. Other role changes were less notable and those other roles saw higher rates of specialization as show in the earlier analysis
+* There is not as much flow between the technical roles but there are some interesting patterns like between production design and costume design.
+
+#### How widespread is the phenomenon of directors re-using the same crew? Do renowned directors (and women/minority directors) tend to work persistently with the same key collaborators compared to lesser recognized directors or a [random Hollywood director](100_rand_hollywood_dir.txt)? 
 
 * For this question I was thinking about various similarity metrics to use and I decided to use the Jaccard Similarity Metric that we had talked about in class. I did some google searching and I found an implementation for a Jaccard Similarity function in python on geeksforgeeks.org
 
@@ -263,6 +315,52 @@ def jaccard_similarity(set1, set2):
 * Jaccard similarity is typically used to compute similarity between two sets or groups, but for this use case we have directors with sometimes many more crews than that so I needed a metric that captured similarity between all the crews that a director has used in their career on different projects.
 * I decided to calculate the Jaccard similarity for each pair of crews and then average these scores (which I did using the itertools combinations function). This method gives an overall idea of similarity across multiple projects and gives us a way to compare different directors and how similar their crews are from project to project.
 
+```python
+crew_dict = final_credits.groupby('title_id')['Name'].apply(set).to_dict()
+
+# Jaccard similarity score function from GeeksForGeeks
+def jaccard_similarity(set1, set2):
+    intersection = len(set1.intersection(set2))
+    union = len(set1.union(set2))
+    return intersection / union if union != 0 else 0
+
+
+directors = directors_movies.groupby('director_name')
+director_similarity_scores = {}
+
+# Decided to calculate the jaccard similarity for every combination of crews and then average those similarity scores for each director
+
+for director, group in directors:
+    title_ids = group['title_ids'].dropna().unique()
+    if len(title_ids) > 1:
+        scores = []
+        
+        for title_id1, title_id2 in combinations(title_ids, 2):
+            crew1 = crew_dict.get(title_id1, set())
+            crew2 = crew_dict.get(title_id2, set())
+            score = jaccard_similarity(crew1, crew2)
+            scores.append(score)
+
+        director_similarity_scores[director] = np.mean(scores)
+    
+    else:
+        # If a director only has one project set the similarity to 0
+        director_similarity_scores[director] = 0
+```
+
+* The full code can be found in the final report folder
+
+#### Results
+
+Directors with the Highest Scores
+* Woody Allen: Highest average Jaccard similarity of 0.176311. This suggests that Woody Allen has a strong tendency to reuse the same crew members across his projects more than any other director in this dataset. Joel Coen Follows with a similarity score of 0.148928, indicating significant reuse of crew members. Clint Eastwood, Christopher Nolan, and Kelly Reichardt also show notable similarities in their crews, with scores ranging from 0.094836 to 0.069960, supporting their preference for working with familiar teams.
+
+* These are all notable directors which seems to suggest that the more notable the director the more prevalent the henomena of directors re-using the same crew is. And that makes logical sense that bigger more influential directors would have more sway or choice in who is on their crew. Additionally there might be something to be said for success influencing crew reuse. If a director makes a really succesful movie, they probably would want to employ some of the same crew that helped contribute to that success.
+
+* The mean Jaccard similarity score across all directors is 0.026026 and  suggesting that on average, directors do not often reuse crew members extensively.
+* The standard deviation is 0.027091, indicating a moderate variability in crew reuse among directors.
+* Directors like Woody Allen and Joel Coen are significant outliers, showing much higher tendencies to reuse crew compared to their peers.
+* Most directors have low to moderate similarity scores, indicating that extensive crew reuse is not the norm. The distribution is skewed right, with a few directors showing very high reuse rates.
   
 ## Research Questions/Tasks
 
