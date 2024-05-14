@@ -85,6 +85,13 @@ for index, row in merged_df.iterrows():
 nx.write_gexf(G2, "/content/attributes.gexf")
 ```
 ## Visualization: Katie
+Visualizing such a larger network is difficult. I decided to break graphing the network down to question-specific visualizations, rather than simply showing the huge mass of nodes and edges that is the full network. In addition, I provide many visualizations to support the analysis conducted by Ben. To look at the full network, we have something like the visualization shown below. It's messy, to spread it out even more would make the visualization huge. It is cool to see, however, and we see that there are pockets of crew that are only connected to one director in the outer edges of the network. These nodes include Denis Villenueve (a Canadian filmmaker), cinematographer Sergio Armstrong, queer filmmaker Gregg Araki, and many others.
+![full_network](https://github.com/BenGreenberg31/Final_Project/assets/129798383/b36aa699-dd24-456a-ba5d-cd2fa9db1e76)
+
+To focus in on these directors and compare them to others, I used the ego network in Gephi to visualize their networks of crew. For example, we have Woody Allen, the director with the highest Jaccard similarity:
+![woody_allen_ego](https://github.com/BenGreenberg31/Final_Project/assets/129798383/14539e66-a4a2-4f88-9a16-f7adb4798e03)
+
+
 
 ## Analysis: Ben
 To answer the first questions relating to what is the distribution of entities in the director-crew dataset I wrote a simple script which can be found in the statistic_check.py file within the final_report folder. The results that it yielded are shown below
