@@ -4,6 +4,8 @@ import pandas as pd
 from itertools import combinations
 import numpy as np
 import pandas as pd
+from collections import Counter
+
 # Basic Analysis Questions
 directors_movies_df = pd.read_csv('directors_movies.csv')
 final_credits_df = pd.read_csv('final_credits.csv')
@@ -136,3 +138,20 @@ plt.xlabel('Director')
 plt.xticks(rotation=45, ha='right')
 plt.subplots_adjust(bottom=0.3)
 plt.savefig('jaccard_bar_plot.png')
+
+
+# Plotting average role change
+
+dict = {'Makeup Department': 99.75,'Visual Effects by': 99.03,'Sound Department': 98.45,'Casting By': 97.97,
+'Special Effects by': 97.78, 'Costume Design by': 97.11, 'Production Design by': 96.17, 'Music by': 94.35,
+'Cinematography by': 91.39, 'Produced by': 84.80, 'Writing Credits': 79.20, 'Directed by': 47.06}
+
+plt.figure()
+plt.barh(range(len(dict)), list(dict.values()), align='center')
+plt.yticks(range(len(dict)), list(dict.keys()),rotation=45, ha='right')
+plt.title('Likelihood of crew members exclusively doing each role')
+plt.ylabel('Role')
+plt.xlabel('Likelihood (%)')
+plt.subplots_adjust(left=0.2, bottom = 0.2)
+
+plt.savefig('average_role_change.png')
