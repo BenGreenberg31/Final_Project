@@ -28,7 +28,62 @@ Pick two questions:
 ## Data Collection: Tiffany
 
 ## Network Generation: Becca
+I decided to create two networks. Both networks are directed with links from crew members to directors. The first network has one link per crew member/director pair and each link is weighted by the number of projects the pair has worked on together. The second network has a one link per project for each crew member/director pair. This links carry the attribute data for the year or the project and the role the crew member held.
 
+The first step in network generation was preparing the data. I merged the directors_movies and final_credits datasets into one data frame and removed duplicate information.
+
+```python
+# load data
+df1 = pd.read_csv('/content/directors_movies.csv',header=0)
+df2 = pd.read_csv('/content/final_credits.csv', header=0)
+
+#match column names
+df1=df1.rename(columns={"title_ids": "title_id"})
+
+# create one df
+merged_df = pd.merge(df2, df1, on='title_id',how='left')
+
+# drop duplicate columns
+merged_df=merged_df.drop(columns=["title"])
+
+# drop directors
+merged_df= merged_df.drop(merged_df[merged_df['Role']=="Directed by"].index)
+```
+Next I created the weigted network:
+```python
+#Creating weighted network
+G = nx.DiGraph()
+#add nodes
+G.add_nodes_from(merged_df['Name'])
+G.add_nodes_from(merged_df['director_name'])
+
+for index, row in merged_df.iterrows():
+  if G.has_edge(row[3], row[10]):
+      # edge already exists, increase weight by one
+      G[row[3]][row[10]]['weight'] += 1
+  else:
+      # add new edge with weight 1
+      G.add_edge(row[3], row[10], weight = 1)
+#save network
+nx.write_gexf(G, "/content/director_crew_weighted.gexf")
+```
+Then I created the attribute network
+```python
+#creating attribute network
+G2 = nx.MultiDiGraph()
+#add nodes
+G2.add_nodes_from(merged_df['Name'])
+G2.add_nodes_from(merged_df['director_name'])
+edge_number=0
+#create edges with attributes
+for index, row in merged_df.iterrows():
+  G2.add_edge(row[3], row[10], key=edge_number)
+  attrs = {(row[3], row[10], edge_number): {"Year": row[8], "Role": row[2]}}
+  nx.set_edge_attributes(G2, attrs)
+  edge_number += 1
+#save network
+nx.write_gexf(G2, "/content/attributes.gexf")
+```
 ## Visualization: Katie
 
 ## Analysis: Ben
