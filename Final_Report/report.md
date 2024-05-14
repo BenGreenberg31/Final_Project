@@ -150,6 +150,27 @@ Number of roles and frequency of each role?
 |Makeup Department   |     701|
 |Special Effects by  |     533|
 
+Examining the network properties we found that:
+
+* Average Shortest Path Length: 0.0010628211965840937
+* Average Clustering Coefficient:0.037667712870140826
+* Density: 0.00022323828449190384
+* Sparsity: 0.9997767617155081
+
+```python
+#Average shortest path length
+avg_shortest_path_length = nx.average_shortest_path_length(G)
+
+
+G_undirected = G.to_undirected()
+#avg clustering coefficient
+average_clustering = nx.average_clustering(G_undirected)
+
+density = nx.density(G)
+
+sparsity = 1 - density
+```
+
 ### Research Questions
 
 #### Measure how roles of crew members fluctuate?
